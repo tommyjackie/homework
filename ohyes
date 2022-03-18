@@ -1,0 +1,72 @@
+#include"stdio.h"
+#include"windows.h"
+#include"conio.h"
+
+#define LONG 11//地图长
+#define WIDE 9//地图宽
+char map[WIDE][LONG+1] = {
+	{"*#*********"},
+	{"***###*###*"},
+	{"###**#****#"},
+	{"*#**###**#*"},
+	{"***********"},
+	{"#####*##*##"},
+	{"**#*****#*E"},
+	{"***#*###**#"},
+	{"*#*********"},
+};
+void print_map()
+{
+	for (int i = 0; i < WIDE; i++)
+	{
+		puts(map[i]);
+	}
+}
+
+void show_cursor(int x, int y)
+{
+	COORD pos;//坐标声明
+	pos.X = x;
+	pos.Y = y;
+	printf("curX=%d,curY=%d\n", x, y);
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);//光标控制代码
+}
+int curX, curY;
+int main()
+{
+	while (1)
+	{
+		system("cls");//清除操作后前方的地图
+		print_map();
+		show_cursor(curX, curY);
+		char mad=getch();/*注意此次的getch只适用于VS2015年之前的版本，
+						 因其极高的不稳定性VS删除了该函数于gets函数。
+						 如高于此版本亲将此次的getch()函数改为_getch()
+						 函数或cin函数*/
+		while (1) {
+			if (mad == 'w')
+			{
+				if ((curY - 1) >= 0 && (map[curY - 1][curX] == '*' || map[curY - 1][curX] == 'E'))curY--;
+			}
+			else if (mad == 's')
+			{
+				if ((curY + 1) < WIDE && (map[curY + 1][curX] == '*' || map[curY + 1][curX] == 'E'))curY++;
+			}
+			else if (mad == 'a')
+			{
+				if ((curX - 1) > +0 && (map[curY][curX - 1] == '*' || map[curY][curX - 1] == 'E'))curX--;
+			}
+			else if (mad == 'd')
+			{
+				if ((curX + 1) < LONG && (map[curY][curX + 1] == '*' || map[curY][curX + 1] == 'E'))curX++;
+			}
+			if (map[curY][curX] == 'E')
+			{
+				printf("恭喜你成功通关！");
+				break;
+			}
+		}
+
+	}
+	return 0;
+}
