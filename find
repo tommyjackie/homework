@@ -1,0 +1,28 @@
+#include"stdio.h"
+#include"string.h"
+int main()
+{
+	char sentence[2000], word[30], test[30];
+	printf("Please enter your sentence.\n");
+	gets_s(sentence);
+	printf("Please enter which word you want to know how much.\n");
+	gets_s(word);
+	_strlwr_s(sentence, strlen(sentence)+1);
+	_strlwr_s(word, strlen(word) + 1);
+	int x = strlen(sentence), i=0, j = 1, n = 0;
+	for (; i < x; i++)
+	{
+		if ((sentence[i] <= 'z' && sentence[i] >= 'a') == 0)
+		{
+			for (int k=j, l = 0; k < i; k++, l++)
+			{
+				test[l] = sentence[k];
+			}
+			j = i + 1;
+			if (strcmp(test, word) == 0)
+				n++;
+		}
+	}
+	printf("有%d个%s.\n", n, word);
+	return 0;
+}
