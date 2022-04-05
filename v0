@@ -1,0 +1,16 @@
+include"stdio.h"
+#include"string.h"
+int main(){
+	int s,i=0;
+	char a[]="1+2+2+1+2+5+4-1-3+4-8";
+	s=a[0]-'0';
+	for(;i<strlen(a);i++)
+	{
+		switch(a[i])
+		{
+		case'+':s+=a[++i]-'0';break;
+		case'-':s-=a[++i]-'0';break;
+		}
+	}
+	printf("%s=%d\n",a,s);
+}
